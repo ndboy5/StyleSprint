@@ -30,7 +30,7 @@ const StyleSprintHeader = () => {
         });
       } else {
         setIsLoggedIn(true);
-        setLoggedUser(result);
+        setLoggedUser();
       }
     });
   });

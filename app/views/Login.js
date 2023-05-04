@@ -27,9 +27,10 @@ const LoginScreen = ({navigation}) => {
       const {success, token, id, role, name} = response.data;
       await AsyncStorage.setItem('token', token);
       await AsyncStorage.setItem('user', id);
-      await AsyncStorage.setItem('userLoggedIn', success);
+      await AsyncStorage.setItem('userLoggedIn', success.toString());
+      await AsyncStorage.setItem('userName', name);
       // Navigate to the home
-      navigation.navigate('Home');
+      if (success) navigation.navigate('Home');
     } catch (error) {
       console.log(error);
     }
