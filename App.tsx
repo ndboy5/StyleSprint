@@ -4,7 +4,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
 import SwipeableInboxList from './app/components/SwipeableInboxList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import {useEffect, useState} from 'react';
 import LoginScreen from './app/views/Login';
 import StyleSprintHeader from './app/components/Header';

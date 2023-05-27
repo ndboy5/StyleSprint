@@ -19,7 +19,7 @@ const LoginScreen = ({navigation}) => {
   const handleLogin = async () => {
     console.log('Handle login function called');
     try {
-      const response = await axios.post(`${API_URL}/api/v1/auth/login`, {
+      const response = await axios.post(`${API_URL}/auth/login`, {
         email,
         password,
       });
