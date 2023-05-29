@@ -34,7 +34,12 @@ const SwipeableInboxList = () => {
   const renderItem = ({item}) => (
     <TouchableOpacity>
       <ListItem bottomDivider>
-        <Icon name="dumbbell" type="font-awesome" color="#517fa4" />
+        <Icon name="address-book" type="font-awesome" color="#517fa4" />
+        {item.gender === 'M' ? (
+          <Icon name="male" type="font-awesome" color="#517fa4" />
+        ) : (
+          <Icon name="female" type="font-awesome" color="#517fa4" />
+        )}
         <ListItem.Content>
           <ListItem.Title>{item.name}</ListItem.Title>
           <ListItem.Subtitle>{item.description}</ListItem.Subtitle>
