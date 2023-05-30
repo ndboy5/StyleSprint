@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   imageStyle: {
-    AlignSelf: 'flex-start',
+    alignSelf: 'flex-start',
     height: 70,
     width: 200,
     flex: 1,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   headText: {
     textAlign: 'right',
     textAlignVertical: 'center',
-    color: '#ffffff',
+    color: '#000000',
     flex: 1,
     paddingRight: 15,
   },

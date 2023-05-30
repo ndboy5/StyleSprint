@@ -1,6 +1,7 @@
 // Login screen
 import React, {useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Button} from '@rneui/base';
 import {
   Text,
   StyleSheet,
@@ -56,18 +57,24 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry={true}
       />
       <Text style={styles.labels}>Enter Password</Text>
-
-      <TouchableHighlight onPress={handleLogin} underlayColor="#000000">
-        <Text style={styles.buttons}>Login</Text>
-      </TouchableHighlight>
-
-      <TouchableHighlight onPress={cancelLogin} underlayColor="#000000">
-        <Text style={styles.buttons}>Cancel</Text>
-      </TouchableHighlight>
-
-      <TouchableHighlight onPress={createAccount} underlayColor="#000000">
-        <Text style={styles.buttons}>Create Account</Text>
-      </TouchableHighlight>
+      <Button
+        containerStyle={{margin: 5}}
+        buttonStyle={{width: 150}}
+        onPress={handleLogin}
+        title="Login"
+      />
+      <Button
+        onPress={cancelLogin}
+        containerStyle={{margin: 5}}
+        buttonStyle={{width: 150}}
+        title="Cancel"
+      />
+      <Button
+        containerStyle={{margin: 5}}
+        buttonStyle={{width: 150}}
+        onPress={createAccount}
+        title="Create Account"
+      />
     </View>
   );
 };
@@ -90,15 +97,6 @@ const styles = StyleSheet.create({
     height: 45,
     fontSize: 16,
     color: '#000000',
-  },
-  buttons: {
-    padding: 15,
-    margin: 5,
-    fontSize: 16,
-    backgroundColor: '#DDDDDD',
-    width: 150,
-    height: 50,
-    textAlign: 'center',
   },
   labels: {
     paddingBottom: 10,

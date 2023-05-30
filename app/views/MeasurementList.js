@@ -5,13 +5,13 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useEffect, useState} from 'react';
-import measurement from './data';
 import {API_URL} from '../../config';
+import {useNavigation} from '@react-navigation/native';
 
-const SwipeableInboxList = () => {
+const MeasurementList = () => {
+  const navigation = useNavigation();
   const [measurements, setMeasurements] = useState(null);
   //Get the list of measurements from the user's account
-  const data = measurement;
   useEffect(() => {
     const fetchUserMeasurements = async () => {
       //fetch user from storage
@@ -31,8 +31,12 @@ const SwipeableInboxList = () => {
     fetchUserMeasurements();
   }, []);
 
+  const onClickMeasurement = () => {
+    navigation.navigate('Measurement');
+  };
+
   const renderItem = ({item}) => (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onClickMeasurement}>
       <ListItem bottomDivider>
         <Icon name="address-book" type="font-awesome" color="#517fa4" />
         {item.gender === 'M' ? (
@@ -91,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SwipeableInboxList;
+export default MeasurementList;
