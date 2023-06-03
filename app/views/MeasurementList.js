@@ -24,20 +24,20 @@ const MeasurementList = () => {
         `${API_URL}/measurements/account/` + userId,
         config,
       );
-      // console.log(response.data.data);
       setMeasurements(response.data.data);
     };
 
     fetchUserMeasurements();
   }, []);
 
-  const onClickMeasurement = () => {
-    navigation.navigate('Measurement');
+  const onClickMeasurement = item => {
+    navigation.navigate('Measurement', {item});
   };
 
   const renderItem = ({item}) => (
-    <TouchableOpacity onPress={onClickMeasurement}>
-      <ListItem bottomDivider>
+    // <TouchableOpacity onPress={() => console.log(item)}>
+    <TouchableOpacity>
+      <ListItem bottomDivider onPress={() => onClickMeasurement(item)}>
         <Icon name="address-book" type="font-awesome" color="#517fa4" />
         {item.gender === 'M' ? (
           <Icon name="male" type="font-awesome" color="#517fa4" />
@@ -70,7 +70,7 @@ const MeasurementList = () => {
       previewRowKey={'0'}
       previewOpenValue={-40}
       previewOpenDelay={3000}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={item => item._id}
     />
   );
 };

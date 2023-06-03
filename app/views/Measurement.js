@@ -1,139 +1,58 @@
 import React, {useState} from 'react';
-import {Text, Button, Card, ListItem, Icon} from '@rneui/base';
+import {Badge, Text, Button, Card, ListItem, Icon} from '@rneui/base';
 import {View} from 'react-native';
+import {useRoute} from '@react-navigation/native';
+import BodyPartList from '../components/bodyPartList';
 
-const Measurement = ({item}) => {
+const Measurement = () => {
+  const route = useRoute();
+
+  const {item} = route.params;
   return (
     <View>
       <Card>
-        <Text h3>Danny's Measurement</Text>
-        <Text h6>Danny's decription</Text>
-        <Text>Unit: CM</Text>
+        <Text h3>{item.name}</Text>
+        <Text h5>{item.description}</Text>
         <Card.Divider />
-        <Button size="sm" type="clear">
-          Learn More
-        </Button>
-      </Card>
-      <Card>
-        <Text h4>Upper Body </Text>
-        <ListItem.Swipeable
-          leftWidth={80}
-          rightWidth={90}
-          minSlideWidth={40}
-          leftContent={action => (
-            <Button
-              containerStyle={{
-                flex: 1,
-                justifyContent: 'center',
-                backgroundColor: '#f4f4f4',
-              }}
-              type="clear"
-              icon={{
-                name: 'archive-outline',
-                type: 'material-community',
-              }}
-              onPress={action}
-            />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Badge value={item.unit} status="error" />
+          <Badge value={item.type} status="warning" />
+          <Badge value={item.owner} status="success" />
+          <Badge value={item.lastUpdateDate} status="primary" />
+
+          {item.gender === 'M' ? (
+            <Icon name="male" type="font-awesome" color="#517fa4" />
+          ) : (
+            <Icon name="female" type="font-awesome" color="#517fa4" />
           )}
-          rightContent={action => (
-            <Button
-              containerStyle={{
-                flex: 1,
-                justifyContent: 'center',
-                backgroundColor: '#f4f4f4',
-              }}
-              type="clear"
-              icon={{name: 'delete-outline'}}
-              onPress={action}
-            />
-          )}>
-          <Icon name="label-important-outline" type="material" />
-          <ListItem.Content>
-            <ListItem.Title>Email from John Doe</ListItem.Title>
-            <ListItem.Subtitle>Hey, I'm John Doe</ListItem.Subtitle>
-          </ListItem.Content>
-          <ListItem.Chevron />
-        </ListItem.Swipeable>
-        <ListItem.Swipeable
-          leftWidth={80}
-          rightWidth={90}
-          minSlideWidth={40}
-          leftContent={action => (
-            <Button
-              containerStyle={{
-                flex: 1,
-                justifyContent: 'center',
-                backgroundColor: '#f4f4f4',
-              }}
-              type="clear"
-              icon={{
-                name: 'archive-outline',
-                type: 'material-community',
-              }}
-              onPress={action}
-            />
-          )}
-          rightContent={action => (
-            <Button
-              containerStyle={{
-                flex: 1,
-                justifyContent: 'center',
-                backgroundColor: '#f4f4f4',
-              }}
-              type="clear"
-              icon={{name: 'delete-outline'}}
-              onPress={action}
-            />
-          )}>
-          <Icon name="label-important-outline" type="material" />
-          <ListItem.Content>
-            <ListItem.Title>Email from John Doe</ListItem.Title>
-            <ListItem.Subtitle>Hey, I'm John Doe</ListItem.Subtitle>
-          </ListItem.Content>
-          <ListItem.Chevron />
-        </ListItem.Swipeable>
+        </View>
       </Card>
-      <Card>
-        <Text h4>Lower Body </Text>
-        <ListItem.Swipeable
-          leftWidth={80}
-          rightWidth={90}
-          minSlideWidth={40}
-          leftContent={action => (
-            <Button
-              containerStyle={{
-                flex: 1,
-                justifyContent: 'center',
-                backgroundColor: '#f4f4f4',
-              }}
-              type="clear"
-              icon={{
-                name: 'archive-outline',
-                type: 'material-community',
-              }}
-              onPress={action}
-            />
-          )}
-          rightContent={action => (
-            <Button
-              containerStyle={{
-                flex: 1,
-                justifyContent: 'center',
-                backgroundColor: '#f4f4f4',
-              }}
-              type="clear"
-              icon={{name: 'delete-outline'}}
-              onPress={action}
-            />
-          )}>
-          <Icon name="label-important-outline" type="material" />
-          <ListItem.Content>
-            <ListItem.Title>Email from John Doe</ListItem.Title>
-            <ListItem.Subtitle>Hey, I'm John Doe</ListItem.Subtitle>
-          </ListItem.Content>
-          <ListItem.Chevron />
-        </ListItem.Swipeable>
-      </Card>
+      {item && item.upperBodyMeasure && (
+        <BodyPartList
+          bodyPart="Upper Body"
+          measurements={item.upperBodyMeasure}
+        />
+      )}
+      {item && item.lowerBodyMeasure && (
+        <BodyPartList
+          bodyPart="Lower Body"
+          measurements={item.lowerBodyMeasure}
+        />
+      )}
+      {item && item.bodiceMeasure && (
+        <BodyPartList bodyPart="Bodice" measurements={item.bodiceMeasure} />
+      )}
+      {item && item.skirtMeasure && (
+        <BodyPartList bodyPart="Skirt" measurements={item.skirtMeasure} />
+      )}
+
+      {item && item.trouserMeasure && (
+        <BodyPartList bodyPart="Trouser" measurements={item.trouserMeasure} />
+      )}
     </View>
   );
 };
