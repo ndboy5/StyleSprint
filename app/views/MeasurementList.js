@@ -7,31 +7,52 @@ import axios from 'axios';
 import {useEffect, useState} from 'react';
 import {API_URL} from '../../config';
 import {useNavigation} from '@react-navigation/native';
+import {Button} from '@rneui/base';
 
 const MeasurementList = () => {
   const navigation = useNavigation();
   const [measurements, setMeasurements] = useState(null);
+  const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(null);
   //Get the list of measurements from the user's account
+  const fetchUserMeasurements = async () => {
+    setToken(await AsyncStorage.getItem('token'));
+    setUserId(await AsyncStorage.getItem('user'));
+    const config = {headers: {Authorization: `Bearer ${token}`}};
+
+    const response = await axios.get(
+      `${API_URL}/measurements/account/` + userId,
+      config,
+    );
+    setMeasurements(response.data.data);
+  };
+
   useEffect(() => {
-    const fetchUserMeasurements = async () => {
-      //fetch user from storage
-      const token = await AsyncStorage.getItem('token');
-      const userId = await AsyncStorage.getItem('user');
-      const config = {headers: {Authorization: `Bearer ${token}`}};
-
-      //Get the list of measurements from the user's account
-      const response = await axios.get(
-        `${API_URL}/measurements/account/` + userId,
-        config,
-      );
-      setMeasurements(response.data.data);
-    };
-
     fetchUserMeasurements();
   }, []);
 
   const onClickMeasurement = item => {
     navigation.navigate('Measurement', {item});
+  };
+
+  const handleDeleteById = async id => {
+    const config = {headers: {Authorization: `Bearer ${token}`}};
+
+    try {
+      //Get the list of measurements from the user's account
+      const response = await axios.delete(
+        `${API_URL}/measurements/` + id,
+        config,
+      );
+      const {success, data} = response.data;
+      console.log(`${success} ${data}`);
+      if (success) {
+        let newList = measurements.filter(m => m._id !== id);
+        setMeasurements(newList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const renderItem = ({item}) => (
@@ -55,23 +76,28 @@ const MeasurementList = () => {
 
   const renderHiddenItem = ({item}) => (
     <View style={styles.rowBack}>
-      <TouchableOpacity style={[styles.backLeftBtn, styles.backLeftBtnLeft]}>
+      <TouchableOpacity
+        onPress={() => handleDeleteById(item._id)}
+        style={[styles.backLeftBtn, styles.backLeftBtnLeft]}>
         <Icon name="trash" type="font-awesome" color="#fff" />
       </TouchableOpacity>
     </View>
   );
 
   return (
-    <SwipeListView
-      data={measurements}
-      renderItem={renderItem}
-      renderHiddenItem={renderHiddenItem}
-      leftOpenValue={75}
-      previewRowKey={'0'}
-      previewOpenValue={-40}
-      previewOpenDelay={3000}
-      keyExtractor={item => item._id}
-    />
+    <View>
+      <Button title="Refresh" onPress={fetchUserMeasurements} />
+      <SwipeListView
+        data={measurements}
+        renderItem={renderItem}
+        renderHiddenItem={renderHiddenItem}
+        leftOpenValue={75}
+        previewRowKey={'0'}
+        previewOpenValue={-40}
+        previewOpenDelay={3000}
+        keyExtractor={item => item._id}
+      />
+    </View>
   );
 };
 

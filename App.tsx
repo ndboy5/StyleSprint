@@ -42,7 +42,8 @@ const App = () => {
         <Stack.Screen
           name="Measurement"
           component={Measurement}
-          options={{header: () => <StyleSprintHeader />}}
+          // options={{header: () => <StyleSprintHeader />}}
+          options={{headerShown: 'false'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

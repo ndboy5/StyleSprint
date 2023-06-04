@@ -6,8 +6,12 @@ import BodyPartList from '../components/bodyPartList';
 
 const Measurement = () => {
   const route = useRoute();
-
   const {item} = route.params;
+  // const [measure, setMeasure] = useState(item);
+
+  const onUpdateMeasurement = () => {
+    console.log('you called update measurement handler');
+  };
   return (
     <View>
       <Card>
@@ -35,6 +39,7 @@ const Measurement = () => {
         <BodyPartList
           bodyPart="Upper Body"
           measurements={item.upperBodyMeasure}
+          // setMeasure={setMeasure}
         />
       )}
       {item && item.lowerBodyMeasure && (
