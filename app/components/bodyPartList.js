@@ -7,6 +7,7 @@ const BodyPartList = ({bodyPart, measurements}) => {
       {measurements.map(m => {
         return (
           <ListItem.Swipeable
+            key={m._id}
             leftWidth={80}
             rightWidth={90}
             minSlideWidth={40}
@@ -38,7 +39,7 @@ const BodyPartList = ({bodyPart, measurements}) => {
               />
             )}>
             <Icon name="label-important-outline" type="material" />
-            <ListItem.Content key={m._id}>
+            <ListItem.Content>
               <ListItem.Title>{m.name} </ListItem.Title>
               <ListItem.Subtitle>{m.size}</ListItem.Subtitle>
             </ListItem.Content>

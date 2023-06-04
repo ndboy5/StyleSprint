@@ -12,6 +12,10 @@ const Measurement = () => {
   const onUpdateMeasurement = () => {
     console.log('you called update measurement handler');
   };
+
+  const onClickSaveButton = () => {
+    console.log('clisked the save button');
+  };
   return (
     <View>
       <Card>
@@ -22,11 +26,15 @@ const Measurement = () => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
+            justifyContent: 'space-evenly',
           }}>
           <Badge value={item.unit} status="error" />
           <Badge value={item.type} status="warning" />
           <Badge value={item.owner} status="success" />
-          <Badge value={item.lastUpdateDate} status="primary" />
+          <Badge
+            value={item.lastUpdateDate.substring(0, 10)}
+            status="primary"
+          />
 
           {item.gender === 'M' ? (
             <Icon name="male" type="font-awesome" color="#517fa4" />
@@ -34,6 +42,9 @@ const Measurement = () => {
             <Icon name="female" type="font-awesome" color="#517fa4" />
           )}
         </View>
+        <Button color="secondary" onPress={onClickSaveButton}>
+          Save
+        </Button>
       </Card>
       {item && item.upperBodyMeasure && (
         <BodyPartList
